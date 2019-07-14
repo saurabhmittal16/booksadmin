@@ -7,10 +7,9 @@ import MainLoading from './Utils/MainLoading';
 import { checkPassword, clearAuthHeaders, setAuthHeaders } from '../utils';
 
 const Login = lazy(() => import('./Login'));
-// const Container = lazy(() => import('./Container'));
+const Container = lazy(() => import('./Container'));
 
 const NotFound = () => <h1>Page not found</h1>;
-const Container = () => <h1>Container</h1>;
 
 class App extends React.Component {
 	constructor(props) {
