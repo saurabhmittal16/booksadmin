@@ -1,7 +1,10 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+
 import MainLoading from './Utils/MainLoading';
-import { checkPassword, clearAuthHeaderes, setAuthHeaders } from '../utils';
+
+import { checkPassword, clearAuthHeaders, setAuthHeaders } from '../utils';
 
 const Login = lazy(() => import('./Login'));
 // const Container = lazy(() => import('./Container'));
@@ -12,40 +15,53 @@ const Container = () => <h1>Container</h1>;
 class App extends React.Component {
 	constructor(props) {
 		super(props);
-		clearAuthHeaderes();
+		clearAuthHeaders();
 
 		this.state = {
-			isAuth: false
-		}
+			isAuth: false,
+		};
 
 		this.handleLogin = this.handleLogin.bind(this);
 	}
 
 	async handleLogin(password) {
-		try {
-			const res = await checkPassword(password);
-			if (res.code === 200 && res.data.success === true)
-			{
-				this.setState({
-					isAuth: false
-				});
-				setAuthHeaders();
-			}
-		} catch (err) {
-			console.log(err);
+		const success = await checkPassword(password);
+		if (success) {
+			this.setState({
+				isAuth: true,
+			});
+			setAuthHeaders();
 		}
+		return success;
 	}
 
 	render() {
 		return (
-			<Suspense fallback={<MainLoading/>}>
+			<Suspense fallback={<MainLoading />}>
 				<BrowserRouter>
 					<Switch>
-						<Route exact path="/" component={Login} handleLogin={this.handleLogin} />
-						{
-							this.state.isAuth && <Route path="/home" component={Container} />
-						}
-						<Route exact path="*" component={NotFound} />
+						<Route
+							exact
+							path="/"
+							component={(props) => (
+								<Login handleLogin={this.handleLogin} {...props} />
+							)}
+						/>
+
+						<Route 
+							path="/home" 
+							component={props => {
+								if (this.state.isAuth) {
+									return <Container {...props} />
+								} else {
+									return <Redirect to={{
+										pathname: '/'
+									}} />
+								}
+							}} 
+						/>
+
+						<Route path="*" component={NotFound} />
 					</Switch>
 				</BrowserRouter>
 			</Suspense>

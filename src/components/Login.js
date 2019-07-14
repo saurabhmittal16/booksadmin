@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Icon, Input, Button } from 'antd';
+import { Form, Icon, Input, Button, message } from 'antd';
 
 const FormItem = Form.Item;
 
@@ -17,8 +17,15 @@ class Login extends React.Component {
         e.preventDefault();
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
-                console.log(values);
-                console.log(this.props.handleLogin);
+                const success = await this.props.handleLogin(values.password);
+                if (success) {
+                    message.success("Login Successful");
+                    this.props.history.push('/home');
+                } else {
+                    this.setState({
+                        error: "Wrong password"
+                    });
+                }
             }
         });
     }
@@ -42,14 +49,12 @@ class Login extends React.Component {
                         }
                     </FormItem>
                     
-                    <FormItem>
-                        <Button type="primary" htmlType="submit" className="login-form-button">
-                            Log in
-                        </Button>
-                        <p id='error'>
-                            {!!this.state.error && this.state.error}
-                        </p>
-                    </FormItem>
+                    <Button type="primary" htmlType="submit" className="login-form-button">
+                        Log in
+                    </Button>
+                    <p id='error'>
+                        {!!this.state.error && this.state.error}
+                    </p>
                     
                 </Form>
             </div>

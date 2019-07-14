@@ -1,16 +1,27 @@
 import axios from 'axios';
-import { client } from './config';
+import { client, server } from './config';
 
-const checkPassword = async (password) => {
-    console.log(password);
+const checkPassword = async password => {
+	try {
+		const res = await axios.post(server + '/api/v1/admin/login', {
+			password: password,
+		});
+
+		if (res.status === 200 && res.data.success === true)
+			return true;
+
+	} catch (err) {
+		console.log(err);
+		return false;
+    }
 };
 
 const setAuthHeaders = () => {
-    axios.defaults.headers.common['Authorization'] = client;
-}
+	axios.defaults.headers.common['Authorization'] = client;
+};
 
-const clearAuthHeaderes = () => {
-    delete axios.defaults.headers.common['Authorization'];
-}
+const clearAuthHeaders = () => {
+	delete axios.defaults.headers.common['Authorization'];
+};
 
-export { checkPassword, setAuthHeaders, clearAuthHeaderes }
+export { checkPassword, setAuthHeaders, clearAuthHeaders };
