@@ -1,11 +1,11 @@
 import React from 'react';
 import { Card, Input, message } from 'antd';
 import LoadingOverlay from './Utils/LoadingOverlay';
-import { getUID } from '../utils';
+import { findByISBN } from '../utils';
 
 const { Search } = Input;
 
-class GetUser extends React.Component {
+class Isbn extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,20 +14,18 @@ class GetUser extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    async handleSubmit(mobile) {
+    async handleSubmit(isbn) {
         this.setState({
             loading: true
         });
+
         try {
-            const res = await getUID(mobile);
-            if (res) {
-                this.props.setUID(res);
-            } else {
-                message.error("No user found");
-                this.props.reset();
+            const res = await findByISBN(isbn);
+            if (!res) {
+                message.error("No data found");
             }
+            this.props.setData(res);
         } catch (err) {
-            message.error("Error");
             console.log(err);
         } finally {
             this.setState({
@@ -35,17 +33,15 @@ class GetUser extends React.Component {
             });    
         }
     }
-
     render() {
         return (
             <div>
-                <Card>
+                <Card style={{marginTop: '10px'}}>
                     <Search 
-                        placeholder="Enter mobile" 
+                        placeholder="Enter ISBN" 
                         onSearch={this.handleSubmit} 
                         enterButton="Search"
-                        minLength={10}
-                        maxLength={10}
+                        type={'number'}
                     />
                 </Card>
                 <LoadingOverlay active={this.state.loading} />
@@ -54,4 +50,4 @@ class GetUser extends React.Component {
     }
 }
 
-export default GetUser;
+export default Isbn;

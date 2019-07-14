@@ -74,4 +74,18 @@ const getUID = async (mobile) => {
 	}
 }
 
-export { checkPassword, setAuthHeaders, clearAuthHeaders, getRentData, getMoreData, markStatus, getUID };
+const findByISBN = async (isbn) => {
+	try {
+		const res = await axios.get(server + '/api/v1/book/isbn?isbn=' + isbn);
+		if (res.status === 200) {
+			return res.data;
+		} else {
+			return null;
+		}
+	} catch (err) {
+		console.log(err);
+		return null;
+	}
+}
+
+export { checkPassword, setAuthHeaders, clearAuthHeaders, getRentData, getMoreData, markStatus, getUID, findByISBN };
