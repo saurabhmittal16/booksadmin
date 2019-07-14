@@ -63,4 +63,15 @@ const markStatus = async (id, status) => {
 	}
 }
 
-export { checkPassword, setAuthHeaders, clearAuthHeaders, getRentData, getMoreData, markStatus };
+const getUID = async (mobile) => {
+	try {
+		const res = await axios.get(server + '/api/v1/admin/mobile/' + mobile);
+		if (res.status === 200)
+			return res.data;
+	} catch (err) {
+		console.log(err);
+		return null;
+	}
+}
+
+export { checkPassword, setAuthHeaders, clearAuthHeaders, getRentData, getMoreData, markStatus, getUID };
