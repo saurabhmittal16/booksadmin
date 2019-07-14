@@ -24,8 +24,8 @@ class ListingForm extends React.Component {
                     name: values.name,
                     author: values.author,
                     description: values.description,
-                    start: values.time[0].format('DD-MM-YYYY'),
-                    end: values.time[1].format('DD-MM-YYYY'),
+                    start: values.time[0].toDate(),
+                    end: values.time[1].toDate(),
                     genre: values.genre
                 }
                 this.props.setData(data);

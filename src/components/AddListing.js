@@ -2,8 +2,10 @@ import React from 'react';
 import GetUser from './GetUser';
 import Isbn from './Isbn';
 import ListingForm from './ListingForm';
+import LoadingOverlay from './Utils/LoadingOverlay';
+import { addListing as createListing } from '../utils';
 
-import { Card } from 'antd';
+import { Card, message } from 'antd';
 
 class AddListing extends React.Component {
     constructor(props) {
@@ -21,7 +23,8 @@ class AddListing extends React.Component {
             reviews: null,
             start: null,
             end: null,
-            searched: false
+            searched: false,
+            loading: false
         }
 
         this.addListing = this.addListing.bind(this);
@@ -67,9 +70,27 @@ class AddListing extends React.Component {
         });
     }
 
-    addListing() {
-        console.log(this.state);
-        // this.reset();
+    async addListing() {
+        this.setState({
+            loading: true
+        });
+
+        try {
+            const res = await createListing(this.state);
+            if (res === true) {
+                message.success("Listing added");
+                this.reset();
+            } else {
+                message.error("Could not add listing");
+            }
+        } catch (err) {
+            console.log(err);
+            message.error("Error"); 
+        }
+
+        this.setState({
+            loading: false
+        });
     }
 
     updateData(data) {
@@ -122,6 +143,7 @@ class AddListing extends React.Component {
                         </div>
                     )
                 }
+                <LoadingOverlay active={this.state.loading} />
             </div>
         );
     }

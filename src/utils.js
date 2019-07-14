@@ -88,4 +88,18 @@ const findByISBN = async (isbn) => {
 	}
 }
 
-export { checkPassword, setAuthHeaders, clearAuthHeaders, getRentData, getMoreData, markStatus, getUID, findByISBN };
+const addListing = async (data) => {
+	try {
+		const res = await axios.post(server + '/api/v1/admin/book', data);
+		if (res.status === 200 && res.data.success) {
+			return true;
+		} else {
+			return false;
+		}
+	} catch (err) {
+		console.log(err);
+		return false;
+	}
+}
+
+export { checkPassword, setAuthHeaders, clearAuthHeaders, getRentData, getMoreData, markStatus, getUID, findByISBN, addListing };
