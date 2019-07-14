@@ -24,4 +24,28 @@ const clearAuthHeaders = () => {
 	delete axios.defaults.headers.common['Authorization'];
 };
 
-export { checkPassword, setAuthHeaders, clearAuthHeaders };
+const getRentData = async () => {
+	try {
+		const res = await axios.get(`${server}/api/v1/admin/rents`)
+		if (res.status === 200) {
+			return res.data;
+		}
+	} catch (err) {
+		console.log(err);
+		return [];
+	}
+}
+
+const getMoreData = async (url) => {
+	try {
+		const res = await axios.get(`${server}/api/v1${url}`);
+		if (res.status === 200) {
+			return res.data;
+		}
+	} catch (err) {
+		console.log(err);
+		return [];
+	}
+}
+
+export { checkPassword, setAuthHeaders, clearAuthHeaders, getRentData, getMoreData };

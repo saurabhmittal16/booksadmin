@@ -14,10 +14,11 @@ const NotFound = () => <h1>Page not found</h1>;
 class App extends React.Component {
 	constructor(props) {
 		super(props);
-		clearAuthHeaders();
+		setAuthHeaders();
+		// clearAuthHeaders();
 
 		this.state = {
-			isAuth: false,
+			isAuth: true,
 		};
 
 		this.handleLogin = this.handleLogin.bind(this);

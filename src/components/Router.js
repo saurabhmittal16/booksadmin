@@ -1,11 +1,11 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Loading from './Utils/Loading';
 
-const Dashboard = () => <h1>Dashboard</h1>;
-const Rents = () => <h1>Rent</h1>;
-const AddListing = () => <h1>AddListing</h1>;
+const Dashboard = lazy(() => import('./Dashboard'));
+const Rents = lazy(() => import('./Rent'));
+const AddListing = lazy(() => import('./AddListing'));
 
 class Router extends React.Component {
     render() {
