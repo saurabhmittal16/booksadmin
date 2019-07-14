@@ -35,6 +35,7 @@ class RentItem extends React.Component {
                 this.setState({
                     visible: false
                 });
+                this.props.update();
             } else {
                 message.error("Could not update");
             }
@@ -49,6 +50,7 @@ class RentItem extends React.Component {
                 this.setState({
                     visible: false
                 });
+                this.props.update();
             } else {
                 message.error("Could not update");
             }
@@ -92,15 +94,31 @@ class RentItem extends React.Component {
                     <div>
                         <div>
                             <strong style={{fontSize: '16px'}}>Pickup from: </strong>
-                            <div><strong>Address: </strong>{this.props.lendeeInfo.address}</div>
-                            <div><strong>Mobile: </strong>{this.props.lendeeInfo.mobile}</div>
+                            <div>
+                                <strong>Address: </strong>
+                                {this.props.lendeeInfo.address}
+                            </div>
+                            <div>
+                                <strong>Mobile: </strong>
+                                <a href={"tel:" + this.props.lendeeInfo.mobile}>
+                                    {this.props.lendeeInfo.mobile}
+                                </a>
+                            </div>
                             <div><strong>Date: </strong>{pickupDate.toDateString()}</div>
                         </div>
                         <br />
                         <div>
                             <strong style={{fontSize: '16px'}}>Deliver to: </strong>
-                            <div><strong>Address: </strong>{this.props.lenderInfo.address}</div>
-                            <div><strong>Mobile: </strong>{this.props.lenderInfo.mobile}</div>
+                            <div>
+                                <strong>Address: </strong>
+                                {this.props.lenderInfo.address}
+                            </div>
+                            <div>
+                                <strong>Mobile: </strong>
+                                <a href={"tel:" + this.props.lenderInfo.mobile}>
+                                    {this.props.lenderInfo.mobile}
+                                </a>
+                            </div>
                             <div><strong>Date: </strong>{deliveryDate.toDateString()}</div>
                         </div>
                     </div>
