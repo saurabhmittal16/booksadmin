@@ -1,27 +1,27 @@
 .login-form {
-    min-width: 300px;
-    max-width: 300px;
-    background-color: white;
-    padding: 20px;
+	min-width: 300px;
+	max-width: 300px;
+	background-color: white;
+	padding: 20px;
 }
 
 .login-form-forgot {
-    float: right;
+	float: right;
 }
 
 .login-form-button {
-    width: 100%;
+	width: 100%;
 }
 
 .login-page {
-    display: flex;
-    justify-content: center;
-    margin-top: 20vh;
+	display: flex;
+	justify-content: center;
+	margin-top: 20vh;
 }
 
 #error {
-    margin: 0;
-    padding: 0;
-    color: red;
-    font-size: 15px
+	margin: 0;
+	padding: 0;
+	color: red;
+	font-size: 15px;
 }
