@@ -48,4 +48,19 @@ const getMoreData = async (url) => {
 	}
 }
 
-export { checkPassword, setAuthHeaders, clearAuthHeaders, getRentData, getMoreData };
+const markStatus = async (id, status) => {
+	try {
+		const res = await axios.post(server + '/api/v1/admin/status', {
+			id: id,
+			status: status
+		});
+
+		if (res.status === 200 && res.data.success === true)
+			return true;
+	} catch (err) {
+		console.log(err);
+		return false;
+	}
+}
+
+export { checkPassword, setAuthHeaders, clearAuthHeaders, getRentData, getMoreData, markStatus };

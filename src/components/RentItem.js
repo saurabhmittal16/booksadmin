@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, Modal, Button } from 'antd';
+import { Card, Modal, Button, message } from 'antd';
+import { markStatus } from '../utils';
 
 class RentItem extends React.Component {
     constructor(props) {
@@ -10,6 +11,8 @@ class RentItem extends React.Component {
 
         this.handleCancel = this.handleCancel.bind(this);
         this.onClick = this.onClick.bind(this);
+        this.onPickedUp = this.onPickedUp.bind(this);
+        this.onDelivered = this.onDelivered.bind(this);
     }
 
     handleCancel() {
@@ -22,6 +25,34 @@ class RentItem extends React.Component {
         this.setState({
             visible: true
         });
+    }
+
+    async onPickedUp() {
+        if (this.props.status === "Confirmed") {
+            const res = await markStatus(this.props._id, "Picked-Up");
+            if (res) {
+                message.success("Status updated");
+                this.setState({
+                    visible: false
+                });
+            } else {
+                message.error("Could not update");
+            }
+        }
+    }
+
+    async onDelivered() {
+        if (this.props.status === "Picked-Up") {
+            const res = await markStatus(this.props._id, "Delivered");
+            if (res) {
+                message.success("Status updated");
+                this.setState({
+                    visible: false
+                });
+            } else {
+                message.error("Could not update");
+            }
+        }
     }
 
     render() {
@@ -50,13 +81,12 @@ class RentItem extends React.Component {
                         <Button key="back" onClick={this.handleCancel}>
                             Close
                         </Button>,
-                        <Button key="pick" type="primary" onClick={this.handleCancel} disabled={this.props.status === "picked-up"}>
+                        <Button key="pick" type="primary" onClick={this.onPickedUp} disabled={this.props.status === "Picked-Up"}>
                             Picked-Up
                         </Button>,
-                        <Button key="deliver" type="primary" onClick={this.handleCancel}>
+                        <Button key="deliver" type="primary" onClick={this.onDelivered} disabled={this.props.status !== "Picked-Up"}>
                             Delivered
                         </Button>,
-                    
                     ]}
                 >
                     <div>

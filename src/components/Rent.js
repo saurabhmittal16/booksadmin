@@ -2,13 +2,14 @@ import React from 'react';
 import { Row, Col, Button } from 'antd';
 import RentItem from './RentItem';
 import Loading from './Utils/Loading';
+import NoData from './Utils/NoData';
 import { getRentData, getMoreData } from '../utils';
 
 class Rent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
+            data: null,
             next: null
         }
         this.fetchMore = this.fetchMore.bind(this);
@@ -19,7 +20,7 @@ class Rent extends React.Component {
         this.setState(
             prevState => {
                 return {
-                    data: prevState.data.concat(data.results),
+                    data: data.results,
                     next: data.next
                 }
             }
@@ -45,7 +46,7 @@ class Rent extends React.Component {
             <div>
                 <Row>
                 {
-                    this.state.data.length > 0 ? (
+                    this.state.data && this.state.data.length > 0 ? (
                         this.state.data.map(
                             (rent, index) => (
                                 <Col lg={8} md={12} sm={24} key={index}>
@@ -53,9 +54,11 @@ class Rent extends React.Component {
                                 </Col>
                             )
                         )
+                    ) : this.state.data && this.state.data.length === 0 ? (
+                        <NoData title="data" />
                     ) : (
                         <Loading />
-                    ) 
+                    )
                 }
                 </Row>
                 <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '10px' }}>
