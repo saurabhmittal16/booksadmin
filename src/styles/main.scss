@@ -1,5 +1,26 @@
 @import '../../node_modules/antd/dist/antd.css';
+@import './components/login';
 
 body {
-    background-color: #10101010;
+	background-color: #10101010;
+}
+
+.loading {
+	height: 60vh;
+	background-color: transparent;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	i {
+		font-size: 72px;
+	}
+}
+
+.main_loading {
+	height: 100vh;
+	background-color: transparent;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
