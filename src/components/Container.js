@@ -6,7 +6,6 @@ import Router from './Router';
 const { Header, Content } = Layout;
 
 const sider = [
-	['/home', 'Dashboard'],
 	['/home/rents', 'Rents'],
 	['/home/add', 'Add Listing'],
 ];

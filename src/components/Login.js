@@ -20,7 +20,7 @@ class Login extends React.Component {
                 const success = await this.props.handleLogin(values.password);
                 if (success) {
                     message.success("Login Successful");
-                    this.props.history.push('/home');
+                    this.props.history.push('/home/rents');
                 } else {
                     this.setState({
                         error: "Wrong password"

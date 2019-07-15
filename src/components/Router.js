@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router-dom';
 
 import Loading from './Utils/Loading';
 
-const Dashboard = lazy(() => import('./Dashboard'));
 const Rents = lazy(() => import('./Rent'));
 const AddListing = lazy(() => import('./AddListing'));
 
@@ -12,7 +11,6 @@ class Router extends React.Component {
         return (
             <Suspense fallback={<Loading />}>
                 <Switch>
-                    <Route exact path='/home' component={Dashboard} />
                     <Route exact path='/home/rents' component={Rents} />
                     <Route exact path='/home/add' component={AddListing} />
                 </Switch>
